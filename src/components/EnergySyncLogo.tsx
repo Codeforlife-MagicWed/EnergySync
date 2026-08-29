@@ -16,7 +16,7 @@ export const EnergySyncLogo: React.FC<EnergySyncLogoProps> = ({
       viewBox="0 0 200 200"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`text-[#0f172a] dark:text-white ${className}`}
+      className={`text-slate-900 ${className}`}
       style={style}
     >
       {/* 1. Outer Heavy Ring */}
@@ -98,7 +98,6 @@ export const EnergySyncLogo: React.FC<EnergySyncLogoProps> = ({
         cy="100"
         r="6.5"
         fill="white"
-        className="dark:fill-[#0f172a]"
       />
       <circle cx="100" cy="100" r="2.5" fill="currentColor" />
     </svg>

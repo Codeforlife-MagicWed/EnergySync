@@ -58,7 +58,7 @@ export const PlaybookView: React.FC<PlaybookViewProps> = ({ onStartSyncing }) =>
         className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
       >
         {/* Card 1: The Battery (Vitality) */}
-        <div className="bg-white dark:bg-slate-850 border-2 border-slate-900 shadow-[6px_6px_0px_#0f172a] rounded-xl overflow-hidden flex flex-col transition-transform hover:-translate-y-1 duration-200">
+        <div className="bg-white border-2 border-slate-900 shadow-[6px_6px_0px_#0f172a] rounded-xl overflow-hidden flex flex-col transition-transform hover:-translate-y-1 duration-200">
           <div className="h-48 bg-emerald-300 border-b-2 border-slate-900 flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#0f172a_1px,transparent_1px)] [background-size:12px_12px]" />
             <BatteryCharging className="w-24 h-24 text-slate-900 relative z-10" strokeWidth={2.2} />
@@ -79,7 +79,7 @@ export const PlaybookView: React.FC<PlaybookViewProps> = ({ onStartSyncing }) =>
         </div>
 
         {/* Card 2: The Blueprint (Spatial Planning) */}
-        <div className="bg-white dark:bg-slate-850 border-2 border-slate-900 shadow-[6px_6px_0px_#0f172a] rounded-xl overflow-hidden flex flex-col transition-transform hover:-translate-y-1 duration-200">
+        <div className="bg-white border-2 border-slate-900 shadow-[6px_6px_0px_#0f172a] rounded-xl overflow-hidden flex flex-col transition-transform hover:-translate-y-1 duration-200">
           <div className="h-48 bg-violet-300 border-b-2 border-slate-900 flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#0f172a_1px,transparent_1px)] [background-size:12px_12px]" />
             <LayoutGrid className="w-24 h-24 text-slate-900 relative z-10" strokeWidth={2.2} />
@@ -100,7 +100,7 @@ export const PlaybookView: React.FC<PlaybookViewProps> = ({ onStartSyncing }) =>
         </div>
 
         {/* Card 3: The Circuit Breaker (Smart Rescue) */}
-        <div className="bg-white dark:bg-slate-850 border-2 border-slate-900 shadow-[6px_6px_0px_#0f172a] rounded-xl overflow-hidden flex flex-col transition-transform hover:-translate-y-1 duration-200">
+        <div className="bg-white border-2 border-slate-900 shadow-[6px_6px_0px_#0f172a] rounded-xl overflow-hidden flex flex-col transition-transform hover:-translate-y-1 duration-200">
           <div className="h-48 bg-amber-300 border-b-2 border-slate-900 flex items-center justify-center relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#0f172a_1px,transparent_1px)] [background-size:12px_12px]" />
             <LifeBuoy className="w-24 h-24 text-slate-900 relative z-10" strokeWidth={2.2} />
