@@ -1,0 +1,6 @@
+{
+  "name": "EnergySync",
+  "description": "An advanced time and energy management application that syncs tasks with Google Sheets, filters tasks by real-time energy level, and extracts action items from Gmail with AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

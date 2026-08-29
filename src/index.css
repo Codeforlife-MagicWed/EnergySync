@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #f8f9fa;
+    --ink: #0f172a;
+    --accent: #7c3aed;
+    --low: #8ec5fc;
+    --med: #e0c3fc;
+    --high: #ffdfd3;
+    --emerald: #059669;
+    --bg-base: #f8f9fa;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--ink);
+    background-color: var(--bg);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, .font-serif-brand {
+    font-family: 'Newsreader', Georgia, serif;
+  }
+
+  .font-mono-code, .label-mono {
+    font-family: 'Space Mono', monospace;
+  }
+}
+
+.label-mono {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+.giant-percent {
+  font-size: clamp(5rem, 11vw, 10.5rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.85;
+}
+
+/* Organic Aurora Mesh Gradient Blobs */
+.bg-blobs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 12% 15%, var(--high) 0%, transparent 45%),
+    radial-gradient(circle at 88% 85%, var(--low) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, var(--med) 0%, transparent 55%);
+  filter: blur(65px);
+  opacity: 0.55;
+}
+
+/* Action Button Neo-Brutalist & Editorial Styling */
+.btn-brutalist-tactile {
+  border: 2px solid #0f172a;
+  box-shadow: 3px 3px 0px #0f172a;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-brutalist-tactile:hover {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px #0f172a;
+}
+
+.btn-brutalist-tactile:active {
+  transform: translateY(4px);
+  box-shadow: 0px 0px 0px #0f172a;
+}
+
+.editorial-action-btn {
+  background: white;
+  border: 2px solid var(--ink);
+  border-radius: 0.75rem;
+  box-shadow: 3px 3px 0px var(--ink);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-action-btn:hover {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px var(--ink);
+}
+
+.editorial-action-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0px 0px 0px var(--ink);
+}
+
+.editorial-action-btn-dark {
+  background: var(--ink);
+  color: white;
+  border: 2px solid var(--ink);
+  border-radius: 0.75rem;
+  box-shadow: 3px 3px 0px var(--ink);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-action-btn-dark:hover {
+  background: #1e293b;
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px var(--ink);
+}
+
+.editorial-action-btn-dark:active {
+  transform: translateY(4px);
+  box-shadow: 0px 0px 0px var(--ink);
+}
+
+/* Custom Neo-Brutalist Range Slider */
+input[type=range].custom-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  outline: none;
+  border: 2px solid var(--ink);
+  border-radius: 9999px;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+input[type=range].custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  background: #0f172a;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 3px solid #0f172a;
+  box-shadow: 2px 2px 0px #0f172a;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+input[type=range].custom-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+  background: #1e293b;
+}
+
+input[type=range].custom-range::-webkit-slider-thumb:active {
+  transform: scale(0.98);
+  box-shadow: 0px 0px 0px #0f172a;
+}
+
+input[type=range].custom-range::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  background: #0f172a;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 3px solid #0f172a;
+  box-shadow: 2px 2px 0px #0f172a;
+}
+
+/* Neo-Brutalist Primary Action CTA */
+.btn-brutalist-accent {
+  background: var(--accent);
+  color: white;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0px var(--ink);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-brutalist-accent:hover {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px var(--ink);
+}
+
+.btn-brutalist-accent:active {
+  transform: translateY(4px);
+  box-shadow: 0px 0px 0px var(--ink);
+}
+
+/* Glass Panels */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.4);
+}
