@@ -43,7 +43,7 @@ interface TimeBlockCalendarProps {
   onActiveBucketChange: (bucket: TaskBucket) => void;
 }
 
-// 24 Hour range (0:00 to 23:00) with 60-pixel hour increments
+// 24 Hour range (0:00 to 23:00) with 64-pixel hour increments
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
 const HOUR_HEIGHT_PX = 64; // px per hour block
 
@@ -224,24 +224,24 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
     }
   };
 
-  // Energy color helper for calendar blocks (Cool spectrum)
+  // Energy color helper for calendar blocks (Neo-Brutalist solid blocks)
   const getEnergyBlockStyle = (energy: EnergyLevel) => {
     switch (energy) {
       case 'High':
         return {
-          blockBg: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-950',
-          accent: 'border-l-4 border-l-emerald-600',
+          blockBg: 'bg-emerald-200 text-slate-900 border-2 border-slate-900 shadow-[3px_3px_0px_#0f172a]',
+          accent: 'border-l-[6px] border-l-emerald-600',
         };
       case 'Medium':
         return {
-          blockBg: 'bg-purple-500/15 border-purple-500/30 text-purple-950',
-          accent: 'border-l-4 border-l-purple-600',
+          blockBg: 'bg-purple-200 text-slate-900 border-2 border-slate-900 shadow-[3px_3px_0px_#0f172a]',
+          accent: 'border-l-[6px] border-l-purple-600',
         };
       case 'Low':
       default:
         return {
-          blockBg: 'bg-cyan-500/15 border-cyan-500/30 text-cyan-950',
-          accent: 'border-l-4 border-l-cyan-600',
+          blockBg: 'bg-sky-200 text-slate-900 border-2 border-slate-900 shadow-[3px_3px_0px_#0f172a]',
+          accent: 'border-l-[6px] border-l-sky-600',
         };
     }
   };
@@ -252,23 +252,23 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
   const currentTimeTopPx = (currentMinutesFromMidnight / 60) * HOUR_HEIGHT_PX;
 
   return (
-    <div className="w-full flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-6">
       {/* Calendar Header & Date Switcher Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white/10 backdrop-blur-2xl px-5 py-3.5 rounded-3xl border border-white/20">
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-2xl bg-amber-500/20 text-amber-900">
-            <CalendarIcon className="w-5 h-5" />
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-white border-[3px] border-slate-900 px-5 sm:px-6 py-4 rounded-2xl shadow-[6px_6px_0px_#0f172a]">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-xl bg-amber-300 border-2 border-slate-900 shadow-[2px_2px_0px_#0f172a] text-slate-900 flex items-center justify-center flex-shrink-0">
+            <CalendarIcon className="w-6 h-6 stroke-[2.5]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-black uppercase tracking-wider text-[#0f172a]/60">
-                Time-Block Calendar
+              <span className="text-xs font-black uppercase tracking-widest text-slate-700">
+                TIME-BLOCK CALENDAR
               </span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/10 text-[#0f172a] flex items-center gap-1 border border-black/10">
-                <Lock className="w-2.5 h-2.5" /> {fixedAnchors.length} Anchored
+              <span className="text-[11px] font-black px-2.5 py-0.5 rounded-md bg-slate-900 text-white border border-slate-900 shadow-[1px_1px_0px_#0f172a] flex items-center gap-1">
+                <Lock className="w-3 h-3 text-amber-300" /> {fixedAnchors.length} ANCHORED
               </span>
             </div>
-            <h3 className="text-base sm:text-lg font-black text-[#0f172a]">
+            <h3 className="text-lg sm:text-2xl font-black text-slate-900 uppercase tracking-tight mt-0.5">
               {new Date(selectedDate + 'T00:00:00').toLocaleDateString(undefined, {
                 weekday: 'long',
                 month: 'short',
@@ -280,46 +280,46 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
         </div>
 
         {/* Date Selector & Horizon Sync */}
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2.5 flex-wrap">
           {completedCount > 0 && (
             <button
               type="button"
               onClick={() => setShowCompleted(!showCompleted)}
               title={showCompleted ? 'Hide completed tasks' : 'Show completed tasks'}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer border-none ${
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer border-2 border-slate-900 shadow-[2px_2px_0px_#0f172a] active:translate-x-0.5 active:translate-y-0.5 ${
                 showCompleted
-                  ? 'bg-emerald-500/20 text-emerald-950 hover:bg-emerald-500/30'
-                  : 'bg-white/30 text-[#0f172a]/60 hover:text-[#0f172a]'
+                  ? 'bg-emerald-300 text-slate-900 hover:bg-emerald-400'
+                  : 'bg-white text-slate-800 hover:bg-slate-100'
               }`}
             >
               {showCompleted ? (
                 <>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Completed ({completedCount})</span>
+                  <CheckCircle2 className="w-4 h-4 text-slate-900" strokeWidth={2.5} />
+                  <span>COMPLETED ({completedCount})</span>
                 </>
               ) : (
                 <>
-                  <EyeOff className="w-3.5 h-3.5 text-[#0f172a]/50" />
-                  <span>Hidden ({completedCount})</span>
+                  <EyeOff className="w-4 h-4 text-slate-700" strokeWidth={2.5} />
+                  <span>HIDDEN ({completedCount})</span>
                 </>
               )}
             </button>
           )}
 
-          <div className="flex items-center gap-1 bg-white/30 p-1 rounded-2xl">
+          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border-2 border-slate-900 shadow-[2px_2px_0px_#0f172a]">
             <button
               type="button"
               onClick={() => {
                 onActiveBucketChange('today');
                 setSelectedDate(getTodayDateString());
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                 selectedDate === getTodayDateString()
-                  ? 'bg-[#0f172a] text-white'
-                  : 'text-[#0f172a]/60 hover:text-[#0f172a]'
+                  ? 'bg-slate-900 text-white shadow-[1px_1px_0px_#0f172a]'
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
               }`}
             >
-              Today
+              TODAY
             </button>
             <button
               type="button"
@@ -327,13 +327,13 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                 onActiveBucketChange('tomorrow');
                 setSelectedDate(getTomorrowDateString());
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-black uppercase transition-all cursor-pointer ${
                 selectedDate === getTomorrowDateString()
-                  ? 'bg-[#0f172a] text-white'
-                  : 'text-[#0f172a]/60 hover:text-[#0f172a]'
+                  ? 'bg-slate-900 text-white shadow-[1px_1px_0px_#0f172a]'
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-white/80'
               }`}
             >
-              Tomorrow
+              TOMORROW
             </button>
           </div>
 
@@ -341,13 +341,13 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="bg-white/30 text-[#0f172a] rounded-2xl px-3 py-2 text-xs font-bold focus:outline-none border-none cursor-pointer"
+            className="bg-white text-slate-900 rounded-xl px-3.5 py-2 text-xs font-black border-2 border-slate-900 shadow-[2px_2px_0px_#0f172a] focus:outline-none cursor-pointer hover:bg-slate-50"
           />
         </div>
       </div>
 
       {/* Main Grid & Flexible Pool Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Floating Flexible Task Pool Tray (Left/Top on LG) */}
         <div
           onDragOver={(e) => {
@@ -355,25 +355,27 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
             e.dataTransfer.dropEffect = 'move';
           }}
           onDrop={handleDropOnFlexibleTray}
-          className="lg:col-span-4 flex flex-col gap-3 bg-white/10 backdrop-blur-2xl p-4 sm:p-5 rounded-3xl border border-white/20 shadow-sm"
+          className="lg:col-span-4 flex flex-col gap-4 bg-white border-[3px] border-slate-900 p-4 sm:p-5 rounded-2xl shadow-[6px_6px_0px_#0f172a]"
         >
-          <div className="flex items-center justify-between gap-2 pb-2 border-b border-black/[0.06]">
+          <div className="flex items-center justify-between gap-2 pb-3 border-b-2 border-slate-900">
             <div>
               <div className="flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-purple-600" />
-                <h4 className="text-sm font-extrabold text-[#0f172a]">Flexible Task Pool</h4>
+                <Sparkles className="w-4 h-4 text-purple-700 stroke-[2.5]" />
+                <h4 className="text-sm sm:text-base font-black text-slate-900 uppercase tracking-wider">
+                  FLEXIBLE TASK POOL
+                </h4>
               </div>
-              <p className="text-[11px] text-[#0f172a]/60 mt-0.5">
-                Drag tasks to time slots on the timeline grid to lock.
+              <p className="text-xs font-bold text-slate-600 mt-0.5">
+                Drag tasks to timeline grid slots to anchor.
               </p>
             </div>
-            <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-white/30 text-[#0f172a]">
+            <span className="text-xs font-mono font-black px-2.5 py-1 rounded-lg bg-amber-300 border-2 border-slate-900 shadow-[2px_2px_0px_#0f172a] text-slate-900">
               {flexibleTasks.length}
             </span>
           </div>
 
           {/* List of Flexible Tasks */}
-          <div className="flex flex-col gap-2 max-h-[520px] overflow-y-auto pr-1 no-scrollbar">
+          <div className="flex flex-col gap-3 max-h-[560px] overflow-y-auto pr-1 no-scrollbar">
             {flexibleTasks.length > 0 ? (
               flexibleTasks.map((task) => {
                 const isCompleted = task.status === 'completed';
@@ -392,31 +394,32 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                       );
                       e.dataTransfer.effectAllowed = 'move';
                     }}
-                    className={`group relative p-3 rounded-2xl bg-white/40 hover:bg-white/70 transition-all border border-white/40 shadow-xs cursor-grab active:cursor-grabbing flex flex-col gap-2 ${
-                      isCompleted ? 'opacity-40 cursor-default' : ''
-                    } ${normalizePriority(task.priority) === 'Critical' ? 'ring-1 ring-rose-400/40 bg-rose-500/5' : ''}`}
+                    className={`group relative p-3.5 rounded-xl bg-white hover:bg-amber-50/60 transition-all border-2 border-slate-900 shadow-[3px_3px_0px_#0f172a] cursor-grab active:cursor-grabbing flex flex-col gap-2.5 ${
+                      isCompleted ? 'opacity-50 cursor-default bg-slate-100' : ''
+                    } ${normalizePriority(task.priority) === 'Critical' ? 'border-rose-500 bg-rose-50/40' : ''}`}
                   >
                     {/* Header line: Grip + Badges */}
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <GripVertical className="w-3.5 h-3.5 text-[#0f172a]/30 group-hover:text-[#0f172a]/70" />
+                        <GripVertical className="w-4 h-4 text-slate-400 group-hover:text-slate-900" />
                         {/* 1-Click Priority Toggle */}
                         <PriorityBadge
                           priority={task.priority}
                           isInteractive={!isCompleted}
                           onClick={(e) => handleTogglePriority(task, e)}
                           title="Click to cycle priority (Critical -> Core -> Can Wait)"
+                          size="sm"
                         />
                         {/* Energy Pill */}
-                        <EnergyBadge energy={task.energyLevel} />
+                        <EnergyBadge energy={task.energyLevel} size="sm" />
                       </div>
 
                       <div className="flex items-center gap-1">
                         {/* Duration */}
-                        <TimeDurationBadge duration={task.estimatedTime} />
+                        <TimeDurationBadge duration={task.estimatedTime} size="sm" />
 
                         {/* Quick Edit & Delete Actions on hover */}
-                        <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button
                             type="button"
                             onClick={(e) => {
@@ -424,7 +427,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                               setEditingTask(task);
                             }}
                             title="Edit task"
-                            className="p-1 rounded-md text-[#0f172a]/40 hover:text-[#0f172a] hover:bg-white/60 transition-colors cursor-pointer"
+                            className="p-1 rounded-md border border-slate-900 bg-white hover:bg-slate-100 text-slate-900 transition-colors cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                           >
                             <Edit2 className="w-3.5 h-3.5" />
                           </button>
@@ -435,7 +438,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                               onDeleteRequest(task);
                             }}
                             title="Delete task"
-                            className="p-1 rounded-md text-[#0f172a]/40 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                            className="p-1 rounded-md border border-slate-900 bg-white hover:bg-rose-100 text-rose-700 transition-colors cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -444,7 +447,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                     </div>
 
                     {/* Task Title & Inline Quick Checkbox */}
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-start gap-2.5">
                       <button
                         type="button"
                         onClick={(e) => {
@@ -453,13 +456,13 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                           const startY = rect.top + rect.height / 2;
                           onToggleStatus(task.id, { startX, startY });
                         }}
-                        className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                        className={`mt-0.5 w-5 h-5 rounded-md border-2 border-slate-900 flex items-center justify-center transition-all cursor-pointer flex-shrink-0 ${
                           isCompleted
-                            ? 'bg-[#0f172a] text-white'
-                            : 'bg-white/60 hover:bg-white text-transparent hover:text-slate-500'
+                            ? 'bg-slate-900 text-white'
+                            : 'bg-white hover:bg-slate-100 text-transparent'
                         }`}
                       >
-                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        <Check className="w-3 h-3 stroke-[3]" />
                       </button>
                       <div
                         className="flex-1 min-w-0 cursor-pointer"
@@ -467,14 +470,14 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                         title="Click to edit task details"
                       >
                         <h5
-                          className={`text-xs sm:text-sm font-bold tracking-tight text-[#0f172a] leading-snug hover:underline ${
+                          className={`text-xs sm:text-sm font-black tracking-tight text-slate-900 leading-snug hover:underline ${
                             isCompleted ? 'line-through opacity-50' : ''
                           }`}
                         >
                           {task.title}
                         </h5>
                         {task.description && (
-                          <p className="text-[11px] text-[#0f172a]/60 line-clamp-1 mt-0.5">
+                          <p className="text-[11px] font-semibold text-slate-600 line-clamp-1 mt-0.5">
                             {task.description}
                           </p>
                         )}
@@ -482,8 +485,8 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                     </div>
 
                     {/* Footer Prompt */}
-                    <div className="flex items-center justify-between text-[10px] text-[#0f172a]/40 pt-1 border-t border-black/[0.04]">
-                      <span>Drag to schedule</span>
+                    <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 pt-2 border-t-2 border-slate-900/10">
+                      <span className="uppercase">DRAG TO TIMELINE</span>
                       <button
                         type="button"
                         onClick={() => {
@@ -498,9 +501,9 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                             updatedAt: new Date().toISOString(),
                           });
                         }}
-                        className="text-xs font-bold text-indigo-700 hover:text-indigo-900 cursor-pointer flex items-center gap-0.5"
+                        className="text-[11px] font-black text-indigo-900 bg-indigo-100 hover:bg-indigo-200 border-2 border-slate-900 shadow-[1px_1px_0px_#0f172a] px-2 py-0.5 rounded-md cursor-pointer flex items-center gap-1 active:translate-x-0.5 active:translate-y-0.5"
                       >
-                        <span>Lock at 14:00</span>
+                        <span>LOCK AT 14:00</span>
                         <ArrowRight className="w-3 h-3" />
                       </button>
                     </div>
@@ -508,15 +511,15 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                 );
               })
             ) : (
-              <div className="py-8 text-center text-xs text-[#0f172a]/40 flex flex-col items-center gap-2">
+              <div className="py-10 text-center text-xs text-slate-600 font-bold flex flex-col items-center gap-2 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300 p-4">
                 <span>All tasks for this day are anchored to time slots.</span>
                 {onOpenCreateModal && (
                   <button
                     type="button"
                     onClick={onOpenCreateModal}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-indigo-700 hover:underline cursor-pointer"
+                    className="inline-flex items-center gap-1 text-xs font-black text-slate-900 bg-amber-300 hover:bg-amber-400 border-2 border-slate-900 shadow-[2px_2px_0px_#0f172a] px-3 py-1.5 rounded-xl cursor-pointer mt-1"
                   >
-                    <Plus className="w-3 h-3" /> Add Task
+                    <Plus className="w-3.5 h-3.5 stroke-[2.5]" /> ADD NEW TASK
                   </button>
                 )}
               </div>
@@ -525,29 +528,31 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
         </div>
 
         {/* 24-Hour Timeline Grid Container (Right on LG) */}
-        <div className="lg:col-span-8 bg-white/10 backdrop-blur-2xl p-4 sm:p-5 rounded-3xl border border-white/20 shadow-sm relative overflow-hidden">
-          <div className="flex items-center justify-between pb-3 mb-2 border-b border-black/[0.06]">
+        <div className="lg:col-span-8 bg-white border-[3px] border-slate-900 p-4 sm:p-5 rounded-2xl shadow-[6px_6px_0px_#0f172a] relative overflow-hidden flex flex-col gap-4">
+          <div className="flex items-center justify-between pb-3 border-b-2 border-slate-900">
             <div>
-              <h4 className="text-sm font-extrabold text-[#0f172a]">24-Hour Daily Timeline</h4>
-              <p className="text-[11px] text-[#0f172a]/60">
+              <h4 className="text-sm sm:text-base font-black text-slate-900 uppercase tracking-wider">
+                24-HOUR DAILY TIMELINE
+              </h4>
+              <p className="text-xs font-bold text-slate-600 mt-0.5">
                 Drop flexible tasks into any 15-minute time bracket to lock schedule.
               </p>
             </div>
-            <div className="flex items-center gap-2 text-[11px] font-bold text-[#0f172a]/70">
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" /> High
+            <div className="flex items-center gap-2 text-[11px] font-black text-slate-900">
+              <span className="flex items-center gap-1 bg-emerald-200 border-2 border-slate-900 shadow-[1px_1px_0px_#0f172a] px-2 py-0.5 rounded-md">
+                <span className="w-2 h-2 rounded-full bg-emerald-600 border border-slate-900" /> HIGH
               </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-purple-500" /> Medium
+              <span className="flex items-center gap-1 bg-purple-200 border-2 border-slate-900 shadow-[1px_1px_0px_#0f172a] px-2 py-0.5 rounded-md">
+                <span className="w-2 h-2 rounded-full bg-purple-600 border border-slate-900" /> MED
               </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" /> Low
+              <span className="flex items-center gap-1 bg-sky-200 border-2 border-slate-900 shadow-[1px_1px_0px_#0f172a] px-2 py-0.5 rounded-md">
+                <span className="w-2 h-2 rounded-full bg-sky-600 border border-slate-900" /> LOW
               </span>
             </div>
           </div>
 
           {/* Continuous Vertical Hour Grid */}
-          <div className="relative max-h-[640px] overflow-y-auto pr-2 no-scrollbar rounded-2xl bg-white/20 border border-white/30">
+          <div className="relative max-h-[640px] overflow-y-auto pr-2 no-scrollbar rounded-xl bg-slate-50 border-2 border-slate-900">
             <div
               className="relative w-full"
               style={{ height: `${HOURS.length * HOUR_HEIGHT_PX}px` }}
@@ -564,8 +569,8 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                       if (dragOverHour === hour) setDragOverHour(null);
                     }}
                     onDrop={(e) => handleDropOnHourSlot(e, hour)}
-                    className={`absolute left-0 right-0 border-b border-black/[0.06] flex items-start transition-colors ${
-                      isDragTarget ? 'bg-indigo-500/10' : 'hover:bg-white/10'
+                    className={`absolute left-0 right-0 border-b-2 border-slate-200 flex items-start transition-colors ${
+                      isDragTarget ? 'bg-indigo-100' : 'hover:bg-amber-50/40'
                     }`}
                     style={{
                       top: `${hour * HOUR_HEIGHT_PX}px`,
@@ -573,30 +578,30 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                     }}
                   >
                     {/* Hour Label */}
-                    <div className="w-16 sm:w-20 py-2 px-3 text-right flex-shrink-0">
-                      <span className="text-xs font-mono font-bold text-[#0f172a]/50">
+                    <div className="w-16 sm:w-20 py-2 px-3 text-right flex-shrink-0 bg-slate-100 border-r-2 border-slate-300 h-full flex items-center justify-end">
+                      <span className="text-xs font-mono font-black text-slate-700">
                         {hour.toString().padStart(2, '0')}:00
                       </span>
                     </div>
 
                     {/* Quarter-Hour Dashed Guide Lines */}
-                    <div className="flex-1 h-full relative border-l border-black/[0.04]">
-                      <div className="absolute top-1/4 left-0 right-0 border-b border-dashed border-black/[0.03] pointer-events-none" />
-                      <div className="absolute top-2/4 left-0 right-0 border-b border-dashed border-black/[0.04] pointer-events-none" />
-                      <div className="absolute top-3/4 left-0 right-0 border-b border-dashed border-black/[0.03] pointer-events-none" />
+                    <div className="flex-1 h-full relative border-l border-slate-200">
+                      <div className="absolute top-1/4 left-0 right-0 border-b border-dashed border-slate-300/80 pointer-events-none" />
+                      <div className="absolute top-2/4 left-0 right-0 border-b border-dashed border-slate-300 pointer-events-none" />
+                      <div className="absolute top-3/4 left-0 right-0 border-b border-dashed border-slate-300/80 pointer-events-none" />
 
                       {/* Visual Drop Projection Placeholder */}
                       {isDragTarget && (
                         <div
-                          className="absolute left-2 right-2 bg-indigo-500/25 border border-indigo-500/40 rounded-xl flex items-center px-3 text-xs font-bold text-indigo-950 pointer-events-none z-20"
+                          className="absolute left-2 right-2 bg-amber-300 border-2 border-slate-900 shadow-[3px_3px_0px_#0f172a] rounded-lg flex items-center px-3 text-xs font-black text-slate-900 pointer-events-none z-20"
                           style={{
                             top: `${(dragOverQuarter / 60) * 100}%`,
                             height: '42px',
                           }}
                         >
-                          <Plus className="w-3.5 h-3.5 mr-1" />
+                          <Plus className="w-4 h-4 mr-1.5 stroke-[3]" />
                           <span>
-                            Lock to {hour.toString().padStart(2, '0')}:
+                            LOCK TO {hour.toString().padStart(2, '0')}:
                             {dragOverQuarter.toString().padStart(2, '0')}
                           </span>
                         </div>
@@ -609,11 +614,11 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
               {/* Current Time Red Marker Line (if looking at today) */}
               {selectedDate === getTodayDateString() && (
                 <div
-                  className="absolute left-16 sm:left-20 right-0 border-t-2 border-rose-500 z-30 pointer-events-none flex items-center"
+                  className="absolute left-16 sm:left-20 right-0 border-t-[3px] border-rose-600 z-30 pointer-events-none flex items-center"
                   style={{ top: `${currentTimeTopPx}px` }}
                 >
-                  <div className="w-2.5 h-2.5 rounded-full bg-rose-500 -ml-1.5 shadow-sm" />
-                  <span className="text-[10px] font-mono font-bold bg-rose-500 text-white px-1.5 py-0.2 rounded-full ml-1 shadow-xs">
+                  <div className="w-3 h-3 rounded-full bg-rose-600 -ml-1.5 border-2 border-slate-900 shadow-[1px_1px_0px_#0f172a]" />
+                  <span className="text-[10px] font-mono font-black bg-rose-600 text-white border-2 border-slate-900 px-2 py-0.5 rounded-md ml-1.5 shadow-[2px_2px_0px_#0f172a]">
                     NOW {now.getHours().toString().padStart(2, '0')}:
                     {now.getMinutes().toString().padStart(2, '0')}
                   </span>
@@ -628,11 +633,11 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                 if (durationMins <= 0) durationMins = task.estimatedMinutes || 45;
 
                 const topPx = (startMins / 60) * HOUR_HEIGHT_PX;
-                const heightPx = Math.max(34, (durationMins / 60) * HOUR_HEIGHT_PX);
+                const heightPx = Math.max(36, (durationMins / 60) * HOUR_HEIGHT_PX);
 
                 const energyStyle = getEnergyBlockStyle(task.energyLevel);
                 const isCompleted = task.status === 'completed';
-                const isShortBlock = durationMins <= 30 || heightPx < 44;
+                const isShortBlock = durationMins <= 30 || heightPx < 46;
 
                 return (
                   <div
@@ -648,12 +653,12 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                       );
                       e.dataTransfer.effectAllowed = 'move';
                     }}
-                    className={`absolute left-18 sm:left-22 right-3 sm:right-5 rounded-2xl transition-all duration-200 shadow-sm backdrop-blur-xl border z-10 min-h-[36px] cursor-grab active:cursor-grabbing group ${
+                    className={`absolute left-18 sm:left-22 right-3 sm:right-5 rounded-xl transition-all duration-150 z-10 min-h-[38px] cursor-grab active:cursor-grabbing group ${
                       isShortBlock
-                        ? 'p-1.5 sm:px-2.5 sm:py-1.5 hover:h-auto hover:min-h-fit hover:z-50 hover:shadow-xl hover:p-2.5'
-                        : 'p-2 sm:p-2.5 hover:shadow-md'
+                        ? 'p-1.5 sm:px-2.5 sm:py-1.5 hover:h-auto hover:min-h-fit hover:z-50 hover:shadow-[5px_5px_0px_#0f172a] hover:p-2.5'
+                        : 'p-2 sm:p-2.5 hover:shadow-[5px_5px_0px_#0f172a]'
                     } ${energyStyle.blockBg} ${energyStyle.accent} ${
-                      isCompleted ? 'opacity-40 grayscale-[40%]' : ''
+                      isCompleted ? 'opacity-50 grayscale-[50%]' : ''
                     }`}
                     style={{
                       top: `${topPx}px`,
@@ -663,9 +668,9 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                     {/* Short block (<30m) non-hover default: Single Horizontal Row */}
                     {isShortBlock ? (
                       <>
-                        {/* Compact Single-Row View (shown by default, hidden on hover if expanded) */}
+                        {/* Compact Single-Row View */}
                         <div className="flex items-center justify-between gap-2 h-full w-full group-hover:hidden min-w-0">
-                          <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                          <div className="flex items-center gap-2 min-w-0 flex-1">
                             <button
                               type="button"
                               onClick={(e) => {
@@ -675,18 +680,19 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                 const startY = rect.top + rect.height / 2;
                                 onToggleStatus(task.id, { startX, startY });
                               }}
-                              className={`w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0 transition-all cursor-pointer ${
+                              className={`w-4 h-4 rounded-md border border-slate-900 flex items-center justify-center flex-shrink-0 transition-all cursor-pointer ${
                                 isCompleted
-                                  ? 'bg-[#0f172a] text-white'
-                                  : 'bg-white/60 hover:bg-white text-transparent hover:text-slate-500'
+                                  ? 'bg-slate-900 text-white'
+                                  : 'bg-white hover:bg-slate-100 text-transparent'
                               }`}
                             >
-                              <Check className="w-2 h-2 stroke-[3]" />
+                              <Check className="w-2.5 h-2.5 stroke-[3]" />
                             </button>
 
                             <FixedTimeBadge
                               startTime={task.startTime}
                               endTime={task.endTime}
+                              size="sm"
                             />
 
                             <h4
@@ -695,7 +701,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                 if (!isCompleted) setEditingTask(task);
                               }}
                               title={task.title}
-                              className={`text-xs font-extrabold truncate text-[#0f172a] cursor-pointer hover:underline min-w-0 ${
+                              className={`text-xs font-black truncate text-slate-900 cursor-pointer hover:underline min-w-0 ${
                                 isCompleted ? 'line-through opacity-50' : ''
                               }`}
                             >
@@ -711,7 +717,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                 setEditingTask(task);
                               }}
                               title="Edit task"
-                              className="p-1 rounded-md bg-white/40 hover:bg-white text-[#0f172a]/70 hover:text-[#0f172a] text-[10px] font-bold cursor-pointer"
+                              className="p-1 rounded-md bg-white border border-slate-900 text-slate-900 text-[10px] font-black cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                             >
                               <Edit2 className="w-3 h-3" />
                             </button>
@@ -719,18 +725,20 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                         </div>
 
                         {/* Expanded Full View on Hover */}
-                        <div className="hidden group-hover:flex flex-col justify-between gap-1.5 w-full min-w-0 animate-in fade-in duration-150">
+                        <div className="hidden group-hover:flex flex-col justify-between gap-2 w-full min-w-0 animate-in fade-in duration-150">
                           <div className="flex items-center justify-between gap-1">
                             <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
                               <FixedTimeBadge
                                 startTime={task.startTime}
                                 endTime={task.endTime}
+                                size="sm"
                               />
                               <PriorityBadge
                                 priority={task.priority}
                                 isInteractive={!isCompleted}
                                 onClick={(e) => handleTogglePriority(task, e)}
                                 title="Click to cycle priority"
+                                size="sm"
                               />
                             </div>
 
@@ -742,19 +750,19 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                   setEditingTask(task);
                                 }}
                                 title="Edit task"
-                                className="p-1 rounded-lg bg-white/50 hover:bg-white text-[#0f172a]/70 hover:text-[#0f172a] text-[10px] font-bold flex items-center gap-0.5 cursor-pointer"
+                                className="p-1 rounded-md bg-white border border-slate-900 hover:bg-slate-100 text-slate-900 text-[10px] font-black flex items-center gap-0.5 cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                               >
                                 <Edit2 className="w-3 h-3" />
-                                <span>Edit</span>
+                                <span>EDIT</span>
                               </button>
                               <button
                                 type="button"
                                 onClick={(e) => handleUnscheduleTask(task, e)}
                                 title="Unpin / Make Flexible"
-                                className="p-1 rounded-lg bg-white/50 hover:bg-white text-[#0f172a]/70 hover:text-[#0f172a] text-[10px] font-bold flex items-center gap-0.5 cursor-pointer"
+                                className="p-1 rounded-md bg-white border border-slate-900 hover:bg-slate-100 text-slate-900 text-[10px] font-black flex items-center gap-0.5 cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                               >
                                 <Unlock className="w-3 h-3" />
-                                <span>Flexible</span>
+                                <span>FLEXIBLE</span>
                               </button>
                               <button
                                 type="button"
@@ -763,7 +771,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                   onDeleteRequest(task);
                                 }}
                                 title="Delete"
-                                className="p-1 rounded-lg bg-white/50 hover:bg-rose-500 hover:text-white text-[#0f172a]/70 text-[10px] cursor-pointer"
+                                className="p-1 rounded-md bg-white border border-slate-900 hover:bg-rose-500 hover:text-white text-slate-900 text-[10px] cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                               >
                                 <Trash2 className="w-3 h-3" />
                               </button>
@@ -780,10 +788,10 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                 const startY = rect.top + rect.height / 2;
                                 onToggleStatus(task.id, { startX, startY });
                               }}
-                              className={`w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 transition-all cursor-pointer ${
+                              className={`w-4 h-4 rounded-md border border-slate-900 flex items-center justify-center flex-shrink-0 transition-all cursor-pointer ${
                                 isCompleted
-                                  ? 'bg-[#0f172a] text-white'
-                                  : 'bg-white/60 hover:bg-white text-transparent hover:text-slate-500'
+                                  ? 'bg-slate-900 text-white'
+                                  : 'bg-white hover:bg-slate-100 text-transparent'
                               }`}
                             >
                               <Check className="w-2.5 h-2.5 stroke-[3]" />
@@ -794,7 +802,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                 if (!isCompleted) setEditingTask(task);
                               }}
                               title={task.title}
-                              className={`text-xs sm:text-sm font-extrabold text-[#0f172a] cursor-pointer hover:underline leading-snug ${
+                              className={`text-xs sm:text-sm font-black text-slate-900 cursor-pointer hover:underline leading-snug ${
                                 isCompleted ? 'line-through opacity-50' : ''
                               }`}
                             >
@@ -812,12 +820,14 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                             <FixedTimeBadge
                               startTime={task.startTime}
                               endTime={task.endTime}
+                              size="sm"
                             />
                             <PriorityBadge
                               priority={task.priority}
                               isInteractive={!isCompleted}
                               onClick={(e) => handleTogglePriority(task, e)}
                               title="Click to cycle priority"
+                              size="sm"
                             />
                           </div>
 
@@ -829,19 +839,19 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                 setEditingTask(task);
                               }}
                               title="Edit task"
-                              className="p-1 rounded-lg bg-white/40 hover:bg-white text-[#0f172a]/70 hover:text-[#0f172a] text-[10px] font-bold flex items-center gap-0.5 cursor-pointer"
+                              className="p-1 rounded-md bg-white border border-slate-900 hover:bg-slate-100 text-slate-900 text-[10px] font-black flex items-center gap-0.5 cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                             >
                               <Edit2 className="w-3 h-3" />
-                              <span className="hidden sm:inline">Edit</span>
+                              <span className="hidden sm:inline">EDIT</span>
                             </button>
                             <button
                               type="button"
                               onClick={(e) => handleUnscheduleTask(task, e)}
                               title="Unpin / Make Flexible"
-                              className="p-1 rounded-lg bg-white/40 hover:bg-white text-[#0f172a]/70 hover:text-[#0f172a] text-[10px] font-bold flex items-center gap-0.5 cursor-pointer"
+                              className="p-1 rounded-md bg-white border border-slate-900 hover:bg-slate-100 text-slate-900 text-[10px] font-black flex items-center gap-0.5 cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                             >
                               <Unlock className="w-3 h-3" />
-                              <span className="hidden sm:inline">Make Flexible</span>
+                              <span className="hidden sm:inline">FLEXIBLE</span>
                             </button>
                             <button
                               type="button"
@@ -850,7 +860,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                                 onDeleteRequest(task);
                               }}
                               title="Delete"
-                              className="p-1 rounded-lg bg-white/40 hover:bg-rose-500 hover:text-white text-[#0f172a]/70 text-[10px] cursor-pointer"
+                              className="p-1 rounded-md bg-white border border-slate-900 hover:bg-rose-500 hover:text-white text-slate-900 text-[10px] cursor-pointer shadow-[1px_1px_0px_#0f172a]"
                             >
                               <Trash2 className="w-3 h-3" />
                             </button>
@@ -858,7 +868,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                         </div>
 
                         {/* Bottom Row: Title & Checkbox */}
-                        <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 min-w-0 overflow-hidden">
+                        <div className="flex items-center gap-2 mt-0.5 min-w-0 overflow-hidden">
                           <button
                             type="button"
                             onClick={(e) => {
@@ -868,13 +878,13 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                               const startY = rect.top + rect.height / 2;
                               onToggleStatus(task.id, { startX, startY });
                             }}
-                            className={`w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center flex-shrink-0 transition-all cursor-pointer ${
+                            className={`w-4 h-4 sm:w-5 sm:h-5 rounded-md border-2 border-slate-900 flex items-center justify-center flex-shrink-0 transition-all cursor-pointer ${
                               isCompleted
-                                ? 'bg-[#0f172a] text-white'
-                                : 'bg-white/60 hover:bg-white text-transparent hover:text-slate-500'
+                                ? 'bg-slate-900 text-white'
+                                : 'bg-white hover:bg-slate-100 text-transparent'
                             }`}
                           >
-                            <Check className="w-2 sm:w-2.5 h-2 sm:h-2.5 stroke-[3]" />
+                            <Check className="w-2.5 sm:w-3 h-2.5 sm:h-3 stroke-[3]" />
                           </button>
                           <h4
                             onClick={(e) => {
@@ -882,7 +892,7 @@ export const TimeBlockCalendar: React.FC<TimeBlockCalendarProps> = ({
                               if (!isCompleted) setEditingTask(task);
                             }}
                             title="Click to edit task"
-                            className={`text-xs sm:text-sm font-extrabold truncate text-[#0f172a] cursor-pointer hover:underline min-w-0 ${
+                            className={`text-xs sm:text-sm font-black truncate text-slate-900 cursor-pointer hover:underline min-w-0 ${
                               isCompleted ? 'line-through opacity-50' : ''
                             }`}
                           >
