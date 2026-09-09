@@ -12,6 +12,18 @@
 
 ---
 
+## 🚀 Live Demo & Demo Video
+
+<p align="center">
+  <a href="https://energysync-bdo9.onrender.com/">
+    <img src="https://img.shields.io/badge/🌐%20Live%20Demo-EnergySync-4285F4?style=for-the-badge" alt="Live Demo">
+  </a>
+  <a href="https://youtu.be/7_6MmGrXVnc?si=j1YidZ-8ALCJ7qT9">
+    <img src="https://img.shields.io/badge/▶️%20Demo%20Video-YouTube-FF0000?style=for-the-badge" alt="Demo Video">
+  </a>
+</p>
+
+
 ## 🌟 Key Features
 
 ### ⚡ 1. Energy-Aware Time-Blocking & Vitality Pulse
