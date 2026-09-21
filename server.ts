@@ -16,6 +16,55 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', name: 'EnergySync Server', timestamp: new Date().toISOString() });
 });
 
+// Candidate models: Primary model per @google/genai guidelines with fallbacks for high demand (503) spikes
+const CANDIDATE_TEXT_MODELS = ['gemini-3.8-flash', 'gemini-3.1-flash-lite', 'gemini-flash-latest'];
+
+async function generateContentWithFallback(
+  ai: GoogleGenAI,
+  params: {
+    contents: any;
+    config?: any;
+  }
+) {
+  let lastError: any = null;
+
+  for (const model of CANDIDATE_TEXT_MODELS) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const response = await ai.models.generateContent({
+          model,
+          contents: params.contents,
+          config: params.config,
+        });
+        return response;
+      } catch (error: any) {
+        lastError = error;
+        const status = error?.status || error?.code || error?.error?.code;
+        const msg = (error?.message || '').toLowerCase();
+        const isTransient =
+          status === 503 ||
+          status === 429 ||
+          msg.includes('503') ||
+          msg.includes('high demand') ||
+          msg.includes('unavailable') ||
+          msg.includes('quota') ||
+          msg.includes('rate limit');
+
+        if (isTransient) {
+          console.warn(`[Gemini] Model ${model} attempt ${attempt + 1} hit temporary condition (${error?.message || status}). Retrying...`);
+          await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+          continue;
+        } else {
+          // Model might be unsupported or error is specific to model configuration; break to try next candidate
+          break;
+        }
+      }
+    }
+  }
+
+  throw lastError || new Error('All Gemini candidate models failed to respond.');
+}
+
 // Gemini AI endpoint to analyze emails and extract structured tasks
 app.post('/api/analyze-emails', async (req, res) => {
   const { emails } = req.body;
@@ -58,8 +107,7 @@ Assign:
 Emails to analyze:
 ${JSON.stringify(emailSummaries, null, 2)}`;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+    const response = await generateContentWithFallback(ai, {
       contents: prompt,
       config: {
         responseMimeType: 'application/json',
@@ -107,7 +155,7 @@ ${JSON.stringify(emailSummaries, null, 2)}`;
 
     return res.json({ analyzedEmails });
   } catch (error: any) {
-    console.error('Gemini analyze-emails error:', error);
+    console.error('Gemini analyze-emails error:', error?.message || error);
     return res.json({ analyzedEmails: null, error: error.message });
   }
 });
@@ -129,8 +177,7 @@ app.post('/api/extract-tasks', async (req, res) => {
     const currentDate = new Date().toISOString().split('T')[0];
     const systemPrompt = `You are an intelligent task parser. Read the user's unstructured text and extract actionable tasks. Current Date is: ${currentDate}. Output ONLY a raw JSON array of objects. Do not include markdown blocks like \`\`\`json. Each object must exactly match this structure: { "title": "Clear task name", "date": "YYYY-MM-DD", "duration": Number in minutes, "priority": "Critical" | "Core" | "Can Wait", "energy": "High" | "Medium" | "Low" }. Duration is UNRESTRICTED. Calculate the exact minutes based on the user's text. If a task takes 4 hours, output 240. If it takes 10 hours, output 600. DO NOT cap or default to 120 minutes.`;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+    const response = await generateContentWithFallback(ai, {
       contents: `${systemPrompt}\n\nUser Text: ${text}`,
       config: {
         responseMimeType: 'application/json',
@@ -154,8 +201,8 @@ app.post('/api/extract-tasks', async (req, res) => {
     const tasks = JSON.parse(response.text || '[]');
     return res.json({ tasks });
   } catch (error: any) {
-    console.error('Gemini extract-tasks error:', error);
-    return res.status(500).json({ error: error.message });
+    console.error('Gemini extract-tasks error:', error?.message || error);
+    return res.json({ tasks: null, error: error.message || 'Gemini model unavailable' });
   }
 });
 
